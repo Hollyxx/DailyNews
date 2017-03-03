@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/home_toolbar">
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:drawableLeft="@mipmap/comment_avatar"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="    请登录"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/collect_nav_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  我的收藏"
+            android:drawableLeft="@mipmap/favorites"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:textColor="#fff"/>
+
+        <TextView
+            android:id="@+id/download_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  离线下载"
+            android:drawableLeft="@mipmap/download"
+            android:gravity="center"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
+        android:background="#f0f0f0"
+        android:textSize="18dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:textColor="@color/home_toolbar"
+        android:drawableLeft="@mipmap/home"
+        android:text="  首页"/>
+
+</LinearLayout>

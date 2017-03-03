@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/list_psychology"
+        android:title="日常心理学" />
+    <item
+        android:id="@+id/list_recommend"
+        android:title="用户推荐日报" />
+    <item
+        android:id="@+id/list_movie"
+        android:title="电影日报" />
+    <item
+        android:id="@+id/list_no_bored"
+        android:title="不许无聊" />
+    <item
+        android:id="@+id/list_design"
+        android:title="设计日报" />
+    <item
+        android:id="@+id/list_company"
+        android:title="大公司日报" />
+    <item
+        android:id="@+id/list_finance"
+        android:title="财经日报" />
+    <item
+        android:id="@+id/list_internet"
+        android:title="互联网安全" />
+    <item
+        android:id="@+id/list_game"
+        android:title="开始游戏" />
+    <item
+        android:id="@+id/list_music"
+        android:title="音乐日报" />
+    <item
+        android:id="@+id/list_manga"
+        android:title="动漫日报" />
+    <item
+        android:id="@+id/list_sports"
+        android:title="体育日报" />
+
+
+</menu>

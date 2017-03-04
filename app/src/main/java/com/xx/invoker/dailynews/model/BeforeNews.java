@@ -27,7 +27,7 @@ public class BeforeNews extends NewsParent {
     }
 
     @Override
-    protected void parseJson(JSONObject object) {
+    public void parseJson(JSONObject object) {
         if (object != null) {
             items = new ArrayList<>();
             try {

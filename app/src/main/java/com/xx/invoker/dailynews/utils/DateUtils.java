@@ -1,5 +1,7 @@
 package com.xx.invoker.dailynews.utils;
 
+import java.util.Date;
+
 /**
  * Created by invoker on 2017/2/28.
  */
@@ -14,4 +16,5 @@ public class DateUtils {
         String time = month + "月" + day + "日";
         return time;
     }
+
 }

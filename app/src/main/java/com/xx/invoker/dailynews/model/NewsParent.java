@@ -11,8 +11,12 @@ import org.json.JSONObject;
 
 public abstract class NewsParent {
 
-    protected String date;
+    public String date;
 
-    protected  abstract void parseJson(JSONObject object);
+    public String getDate() {
+        return date;
+    }
+
+    public  abstract void parseJson(JSONObject object);
 
 }

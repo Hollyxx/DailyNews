@@ -15,9 +15,14 @@ import java.util.List;
 public class LatestNews extends NewsParent {
 
     private List<News> items;
+    private String time;
 
     public List<News> getItems() {
         return items;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     @Override
@@ -25,6 +30,7 @@ public class LatestNews extends NewsParent {
         if (object != null) {
             items = new ArrayList<>();
             try {
+                time = object.getString("date");
                 date = "今日热闻";
                 JSONArray array = object.getJSONArray("stories");
                 for (int i = 0; i < array.length(); i++) {

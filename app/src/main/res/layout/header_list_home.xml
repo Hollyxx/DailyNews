@@ -5,32 +5,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_header_list_home"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="230dp" />
 
-    <TextView
-        android:id="@+id/title_pager_header_list_home"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="16dp"
-        android:textColor="#000"
-        android:textSize="20sp"
-        android:layout_marginBottom="20dp"
-        android:text="我们离电影《终结者》中的机器人还有多远?"
-        android:layout_alignBottom="@+id/pager_header_list_home"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <RadioGroup
-        android:id="@+id/group_pager_header_list_home"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal"
-        android:layout_alignBottom="@id/pager_header_list_home"
-        android:gravity="center">
-
-    </RadioGroup>
 </RelativeLayout>

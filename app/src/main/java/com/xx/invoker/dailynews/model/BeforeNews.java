@@ -21,6 +21,11 @@ import java.util.List;
 public class BeforeNews extends NewsParent {
 
     private List<News> items;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
 
     public List<News> getItems() {
         return items;
@@ -31,6 +36,7 @@ public class BeforeNews extends NewsParent {
         if (object != null) {
             items = new ArrayList<>();
             try {
+                time = object.getString("date");
                 String str = object.getString("date");
                 date = DateUtils.getDate(str);
 

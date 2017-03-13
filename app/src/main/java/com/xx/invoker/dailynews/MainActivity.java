@@ -3,18 +3,13 @@ package com.xx.invoker.dailynews;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.xx.invoker.dailynews.view.HomeFragment;
 
@@ -28,23 +23,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initDrawerView();
-        initListView();
 
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_fragment_home,new HomeFragment()).commit();
 
     }
 
-    //初始化ListView
-    private void initListView() {
 
-
-        View view = LayoutInflater.from(this).inflate(R.layout.header_list_home, null);
-        ViewPager pager = (ViewPager) view.findViewById(R.id.pager_header_list_home);
-        TextView title = (TextView) view.findViewById(R.id.title_pager_header_list_home);
-        RadioGroup group = (RadioGroup) view.findViewById(R.id.group_pager_header_list_home);
-
-    }
 
     //初始化抽屉布局及ToolBar
     private void initDrawerView() {
@@ -74,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //TODO: 抽屉的单条点击事件
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+
+        }
+
         return false;
     }
 

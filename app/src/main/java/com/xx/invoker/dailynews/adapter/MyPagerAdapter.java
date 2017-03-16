@@ -1,6 +1,7 @@
 package com.xx.invoker.dailynews.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.xx.invoker.dailynews.ContentActivity;
 import com.xx.invoker.dailynews.R;
 import com.xx.invoker.dailynews.model.HeadNews;
 
@@ -42,7 +44,7 @@ public class MyPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        View view= (View) object;
+        View view = (View) object;
         container.removeView(view);
     }
 
@@ -52,10 +54,20 @@ public class MyPagerAdapter extends PagerAdapter {
         ImageView image = (ImageView) view.findViewById(R.id.image_header_list_home);
         TextView title = (TextView) view.findViewById(R.id.title_pager_header_list_home);
 
-        HeadNews news = data.get(position);
+        final HeadNews news = data.get(position);
 
         title.setText(news.getTitle());
         Glide.with(context).load(news.getImage()).into(image);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ContentActivity.class);
+                intent.putExtra("id", news.getId());
+                intent.putExtra("title", news.getTitle());
+                intent.putExtra("image", news.getImage());
+                context.startActivity(intent);
+            }
+        });
         container.addView(view);
         return view;
     }

@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,11 +130,13 @@ public class HomeFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object o = data.get(position);
+                Object o = data.get((int)id);
                 if (o instanceof News) {
                     News news = (News) o;
                     Intent intent = new Intent(context, ContentActivity.class);
                     intent.putExtra("id",news.getId());
+                    intent.putExtra("title", news.getTitle());
+                    intent.putExtra("image", news.getImage());
                     startActivity(intent);
                 }
             }
@@ -148,6 +151,8 @@ public class HomeFragment extends Fragment {
                 swipe.setRefreshing(false);
             }
         });
+
+
     }
 
     //进行网络加载数据

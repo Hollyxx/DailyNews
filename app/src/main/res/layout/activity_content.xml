@@ -7,14 +7,34 @@
     android:layout_height="match_parent"
     tools:context="com.xx.invoker.dailynews.ContentActivity">
 
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xx:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                android:id="@+id/head_content"
+                layout="@layout/item_head__pager_list_home" />
+            <WebView
+                android:id="@+id/web_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/head_content"/>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+        android:id="@+id/appBar_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/sec_toolbar"
+            android:id="@+id/toolbar_content"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/home_toolbar"
@@ -25,32 +45,36 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@mipmap/back"
+                android:onClick="menuClick"
                 android:clickable="true" />
 
 
             <ImageView
-                android:id="@+id/action_share"
+                android:id="@+id/action_share_toolbar_content"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginLeft="120dp"
                 android:layout_marginRight="5dp"
                 android:background="@mipmap/menu_share"
+                android:onClick="menuClick"
                 android:clickable="true"
-                android:showAsAction="ifRoom" />
+                android:showAsAction="always" />
 
             <ImageView
-                android:id="@+id/action_collect"
+                android:id="@+id/action_collect_toolbar_content"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginRight="5dp"
                 android:background="@mipmap/collect"
+                android:onClick="menuClick"
                 android:clickable="true" />
 
             <ImageView
-                android:id="@+id/action_comment"
+                android:id="@+id/action_comment_toolbar_content"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@mipmap/comment"
+                android:onClick="menuClick"
                 android:clickable="true"
                 />
 
@@ -61,38 +85,27 @@
                 android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:lines="1"
-                android:text="25"
+                android:text="..."
                 android:textColor="#fff" />
 
             <ImageView
-                android:id="@+id/action_zan"
+                android:id="@+id/action_praise_toolbar_content"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:onClick="menuClick"
                 android:background="@mipmap/praise"
                 android:clickable="true"/>
 
             <TextView
-                android:id="@+id/action_zan_number"
+                android:id="@+id/action_praise_number"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="25"
+                android:text="..."
                 android:textColor="#fff" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-
-    <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:id="@+id/caonima"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--xx:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-        <!--<com.jpf.admin.zhrb.widget.MyViewPager-->
-            <!--android:id="@+id/viewpager_Sec"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
-    <!--</android.support.v4.widget.NestedScrollView>-->
 
 
 </android.support.design.widget.CoordinatorLayout>

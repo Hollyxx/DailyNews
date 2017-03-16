@@ -24,6 +24,18 @@ public class HeadNews {
         return title;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void parseJson(JSONObject object) {
         if (object != null) {
             try {

@@ -19,4 +19,7 @@ public class Address {
 
     //新闻的额外属性  需要拼接的属性Id  长评论，点赞数
     public static final String Extra_Content = "http://news-at.zhihu.com/api/4/story-extra/";
+
+    //主题新闻的详情页面 需要拼接的属性   id
+    public static final String Theme_News="http://news-at.zhihu.com/api/4/theme/";
 }

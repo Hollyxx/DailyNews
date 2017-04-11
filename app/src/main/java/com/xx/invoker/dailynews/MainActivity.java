@@ -16,7 +16,6 @@ import com.xx.invoker.dailynews.view.HomeFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +24,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initDrawerView();
 
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frame_fragment_home,new HomeFragment()).commit();
+        manager.beginTransaction().replace(R.id.frame_fragment_home, new HomeFragment()).commit();
 
     }
-
 
 
     //初始化抽屉布局及ToolBar
@@ -60,7 +58,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
+            case R.id.list_company:
+
+                break;
+
+            case R.id.list_design:
+
+                break;
+            case R.id.list_finance:
+
+                break;
+            case R.id.list_game:
+
+                break;
+            case R.id.list_home:
+
+                break;
+            case R.id.list_internet:
+
+                break;
+            case R.id.list_manga:
+
+                break;
+            case R.id.list_movie:
+
+                break;
+            case R.id.list_music:
+
+                break;
+            case R.id.list_no_bored:
+
+                break;
+            case R.id.list_psychology:
+
+                break;
+            case R.id.list_sports:
+
+                break;
 
         }
 

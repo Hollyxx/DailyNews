@@ -15,6 +15,7 @@ public class News {
     private String image;
     private String title;
 
+
     public int getId() {
         return id;
     }

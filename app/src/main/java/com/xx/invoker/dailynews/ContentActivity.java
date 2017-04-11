@@ -1,6 +1,8 @@
 package com.xx.invoker.dailynews;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +11,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -17,8 +20,10 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.xx.invoker.dailynews.address.Address;
 import com.xx.invoker.dailynews.app.MyApp;
+import com.xx.invoker.dailynews.db.MyHelper;
 import com.xx.invoker.dailynews.model.Content;
 import com.xx.invoker.dailynews.model.ExtraContent;
+import com.xx.invoker.dailynews.model.News;
 
 import org.json.JSONObject;
 
@@ -32,21 +37,26 @@ public class ContentActivity extends AppCompatActivity {
     private Intent intent;
     private int id;
     private WebView web;
-    private ImageView image;
+    private ImageView image,praiseImg;
     private TextView title;
     private Content content;
     private Toolbar bar;
+    private MyHelper DBHelper;
+    private News news;
+    private SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
-
+        initView();
         //获取上个页面传来的信息
         intent = getIntent();
         id = intent.getIntExtra("id", 0);
-        initView();
-
+        news.setId(id);
+        news.setTitle(intent.getStringExtra("title"));
+        news.setImage(intent.getStringExtra("image"));
         loadDate();
 
     }
@@ -58,6 +68,10 @@ public class ContentActivity extends AppCompatActivity {
         web = (WebView) findViewById(R.id.web_content);
         image = (ImageView) findViewById(R.id.image_header_list_home);
         title = (TextView) findViewById(R.id.title_pager_header_list_home);
+        praiseImg = (ImageView) findViewById(R.id.action_praise_toolbar_content);
+        DBHelper = new MyHelper(this, null);
+        db = DBHelper.getWritableDatabase();
+        news = new News();
     }
 
 
@@ -98,9 +112,9 @@ public class ContentActivity extends AppCompatActivity {
                         if (popularity >= 1000) {
                             praise.setText(popularity / 1000 + ".0K");
                         } else
-                            praise.setText(popularity+"");
+                            praise.setText(popularity + "");
 
-                        comment.setText(comments+"");
+                        comment.setText(comments + "");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -132,7 +146,7 @@ public class ContentActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_collect_toolbar_content:
                 //TODO 在这里进行收藏的操作，将数据存储到数据库中
-
+                insert(db, news);
                 break;
 
             case R.id.action_comment_toolbar_content:
@@ -143,6 +157,9 @@ public class ContentActivity extends AppCompatActivity {
             case R.id.action_praise_toolbar_content:
                 //TODO 在这里进行点赞的操作，点击后弹出Toast
 
+                praiseImg.setImageResource(R.mipmap.comment_voted);
+                Toast.makeText(this, "点赞成功", Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.back_content_activity:
@@ -151,4 +168,17 @@ public class ContentActivity extends AppCompatActivity {
         }
 
     }
+
+    private void insert(SQLiteDatabase db, News news) {
+        ContentValues values = new ContentValues();
+        values.put("id", news.getId());
+        values.put("title", news.getTitle());
+        values.put("url", news.getImage());
+        long count = db.insert("collections", null, values);
+        if (count > 0) {
+            Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+
 }

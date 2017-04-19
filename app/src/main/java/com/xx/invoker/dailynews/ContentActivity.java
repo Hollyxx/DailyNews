@@ -1,15 +1,23 @@
 package com.xx.invoker.dailynews;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +32,11 @@ import com.xx.invoker.dailynews.db.MyHelper;
 import com.xx.invoker.dailynews.model.Content;
 import com.xx.invoker.dailynews.model.ExtraContent;
 import com.xx.invoker.dailynews.model.News;
+import com.xx.invoker.dailynews.utils.StatusBarUtil;
+import com.xx.invoker.dailynews.utils.SystemBarTintManager;
 
 import org.json.JSONObject;
 
-/**
- * TODO  需要添加数据库的帮助类，将数据存到数据库中
- */
 
 public class ContentActivity extends AppCompatActivity {
 
@@ -37,13 +44,16 @@ public class ContentActivity extends AppCompatActivity {
     private Intent intent;
     private int id;
     private WebView web;
-    private ImageView image,praiseImg;
+    private ImageView image, praiseImg, collectImg;
     private TextView title;
     private Content content;
     private Toolbar bar;
     private MyHelper DBHelper;
     private News news;
     private SQLiteDatabase db;
+    private SharedPreferences preferences;
+    private LinearLayout linearLayout;
+//    private SystemBarTintManager manager;
 
 
     @Override
@@ -51,7 +61,9 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
         initView();
+        preferences = MyApp.getPreferences();
         //获取上个页面传来的信息
+
         intent = getIntent();
         id = intent.getIntExtra("id", 0);
         news.setId(id);
@@ -69,9 +81,13 @@ public class ContentActivity extends AppCompatActivity {
         image = (ImageView) findViewById(R.id.image_header_list_home);
         title = (TextView) findViewById(R.id.title_pager_header_list_home);
         praiseImg = (ImageView) findViewById(R.id.action_praise_toolbar_content);
+        collectImg = (ImageView) findViewById(R.id.action_collect_toolbar_content);
+        linearLayout = (LinearLayout) findViewById(R.id.head_view);
         DBHelper = new MyHelper(this, null);
         db = DBHelper.getWritableDatabase();
         news = new News();
+        StatusBarUtil.setWindowStatusBarColor(this,R.color.home_toolbar);
+
     }
 
 
@@ -83,8 +99,12 @@ public class ContentActivity extends AppCompatActivity {
                     try {
                         Gson gson = new Gson();
                         content = gson.fromJson(response, Content.class);
-                        Glide.with(ContentActivity.this).load(content.getImage()).into(image);
-                        title.setText(content.getTitle());
+                        if (TextUtils.isEmpty(content.getImage())){
+                            linearLayout.setVisibility(View.GONE);
+                        }else {
+                            Glide.with(ContentActivity.this).load(content.getImage()).into(image);
+                            title.setText(content.getTitle());
+                        }
                         setWebViewDisplay();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -145,8 +165,16 @@ public class ContentActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_collect_toolbar_content:
-                //TODO 在这里进行收藏的操作，将数据存储到数据库中
-                insert(db, news);
+                if (!preferences.getBoolean("loginStatus", false)) {
+                    Intent intent = new Intent(ContentActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    if(!isCollect()){
+                        insert(db, news);
+                        collectImg.setImageResource(R.mipmap.collected);
+                    }else
+                        Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.action_comment_toolbar_content:
@@ -158,7 +186,7 @@ public class ContentActivity extends AppCompatActivity {
                 //TODO 在这里进行点赞的操作，点击后弹出Toast
 
                 praiseImg.setImageResource(R.mipmap.comment_voted);
-                Toast.makeText(this, "点赞成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "点赞成功 +1", Toast.LENGTH_SHORT).show();
 
                 break;
 
@@ -169,11 +197,23 @@ public class ContentActivity extends AppCompatActivity {
 
     }
 
+    //判断是否已经收藏过
+    private boolean isCollect() {
+        Cursor cursor = db.query("collections", null, "id=?", new String[]{"" + news.getId()}, null, null, null, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.close();
+            return true;
+        }else
+            return false;
+    }
+
+
     private void insert(SQLiteDatabase db, News news) {
         ContentValues values = new ContentValues();
         values.put("id", news.getId());
         values.put("title", news.getTitle());
         values.put("url", news.getImage());
+        values.put("username",preferences.getString("username","abc"));
         long count = db.insert("collections", null, values);
         if (count > 0) {
             Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();

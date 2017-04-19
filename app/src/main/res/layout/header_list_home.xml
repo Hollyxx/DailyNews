@@ -5,6 +5,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_header_list_home"
         android:layout_width="match_parent"
-        android:layout_height="230dp" />
+        android:layout_height="240dp" />
 
 </RelativeLayout>

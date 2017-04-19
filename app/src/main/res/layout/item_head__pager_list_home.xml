@@ -7,11 +7,17 @@
     <ImageView
         android:id="@+id/image_header_list_home"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="240dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/comment_empty" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="#3f000000" />
 
     <TextView
         android:id="@+id/title_pager_header_list_home"

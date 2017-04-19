@@ -15,14 +15,22 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <include
-                android:id="@+id/head_content"
-                layout="@layout/item_head__pager_list_home" />
+
+            <LinearLayout
+                android:id="@+id/head_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <include
+                    android:id="@+id/head_content"
+                    layout="@layout/item_head__pager_list_home" />
+            </LinearLayout>
+
+
             <WebView
                 android:id="@+id/web_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/head_content"/>
+                android:layout_below="@id/head_view"/>
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -51,19 +59,20 @@
 
             <ImageView
                 android:id="@+id/action_share_toolbar_content"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="120dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="150dp"
                 android:layout_marginRight="5dp"
                 android:background="@mipmap/menu_share"
                 android:onClick="menuClick"
                 android:clickable="true"
+                android:scaleType="fitXY"
                 android:showAsAction="always" />
 
             <ImageView
                 android:id="@+id/action_collect_toolbar_content"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="5dp"
                 android:background="@mipmap/collect"
                 android:onClick="menuClick"
@@ -71,8 +80,8 @@
 
             <ImageView
                 android:id="@+id/action_comment_toolbar_content"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="@mipmap/comment"
                 android:onClick="menuClick"
                 android:clickable="true"
@@ -82,7 +91,6 @@
                 android:id="@+id/action_comment_number"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="5dp"
                 android:gravity="center"
                 android:lines="1"
                 android:text="..."
@@ -90,8 +98,8 @@
 
             <ImageView
                 android:id="@+id/action_praise_toolbar_content"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="28dp"
                 android:onClick="menuClick"
                 android:background="@mipmap/praise"
                 android:clickable="true"/>
@@ -100,7 +108,6 @@
                 android:id="@+id/action_praise_number"
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:text="..."
                 android:textColor="#fff" />

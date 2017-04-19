@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "Collection";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public MyHelper(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DB_NAME, factory, DB_VERSION);
@@ -19,11 +19,15 @@ public class MyHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists collections(id int primary key,title varchar,url varchar)");
+        db.execSQL("create table if not exists collections(id int primary key,username varchar,title varchar,url varchar)");
+        db.execSQL("create table if not exists user(id int primary key,username varchar, password varchar)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (newVersion>oldVersion){
+            db.execSQL("drop table collections");
+            onCreate(db);
+        }
     }
 }

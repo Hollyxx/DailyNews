@@ -22,4 +22,7 @@ public class Address {
 
     //主题新闻的详情页面 需要拼接的属性   id
     public static final String Theme_News="http://news-at.zhihu.com/api/4/theme/";
+
+    //新闻长评论查看  http://news-at.zhihu.com/api/4/story/8997528/long-comments
+    public static final String Comments_News="http://news-at.zhihu.com/api/4/story/";
 }

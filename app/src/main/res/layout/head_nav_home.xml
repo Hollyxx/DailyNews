@@ -10,12 +10,13 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="18sp"
         android:drawableLeft="@mipmap/comment_avatar"
         android:gravity="center"
         android:textColor="#fff"
-        android:text="    请登录"/>
+        android:text="    请登录"
+        android:onClick="mClick"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +33,7 @@
             android:text="  我的收藏"
             android:drawableLeft="@mipmap/favorites"
             android:gravity="center"
+            android:onClick="mClick"
             android:layout_marginRight="10dp"
             android:textColor="#fff"/>
 
@@ -56,6 +58,7 @@
         android:paddingLeft="20dp"
         android:textColor="@color/home_toolbar"
         android:drawableLeft="@mipmap/home"
+        android:onClick="mClick"
         android:text="  首页"/>
 
 </LinearLayout>

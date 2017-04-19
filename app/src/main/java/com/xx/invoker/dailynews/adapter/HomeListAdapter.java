@@ -1,6 +1,7 @@
 package com.xx.invoker.dailynews.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,10 @@ public class HomeListAdapter extends BaseAdapter {
 
             News news = (News) data.get(position);
             holder.title.setText(news.getTitle());
-            Glide.with(context).load(news.getImage()).into(holder.image);
+            if (!TextUtils.isEmpty(news.getImage()))
+                Glide.with(context).load(news.getImage()).into(holder.image);
+            else
+                holder.image.setVisibility(View.GONE);
         }
 
 

@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment {
                 if (isBottom && scrollState == SCROLL_STATE_IDLE && date != null) {
                     initMore();
                 }
-
             }
 
             @Override
@@ -130,11 +129,11 @@ public class HomeFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object o = data.get((int)id);
+                Object o = data.get((int) id);
                 if (o instanceof News) {
                     News news = (News) o;
                     Intent intent = new Intent(context, ContentActivity.class);
-                    intent.putExtra("id",news.getId());
+                    intent.putExtra("id", news.getId());
                     intent.putExtra("title", news.getTitle());
                     intent.putExtra("image", news.getImage());
                     startActivity(intent);
@@ -146,9 +145,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
                 data.clear();
-                headList.clear();
                 initData();
-                swipe.setRefreshing(false);
+
             }
         });
 
@@ -161,8 +159,9 @@ public class HomeFragment extends Fragment {
         StringRequest request = new StringRequest(Address.Latest_News, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    if (response != null) {
+
+                if (response != null) {
+                    try {
                         //获取今日热闻的数据
                         LatestNews news = new LatestNews();
                         news.parseJson(new JSONObject(response));
@@ -172,19 +171,21 @@ public class HomeFragment extends Fragment {
                         date = news.getTime();
 
                         //获得首页ViewPager的数据
-                        JSONArray array = new JSONObject(response).getJSONArray("top_stories");
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject object = array.getJSONObject(i);
-                            HeadNews head = new HeadNews();
-                            head.parseJson(object);
-                            headList.add(head);
+                        if (headList.size()==0){
+                            JSONArray array = new JSONObject(response).getJSONArray("top_stories");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                HeadNews head = new HeadNews();
+                                head.parseJson(object);
+                                headList.add(head);
+                            }
+                            pagerAdapter.notifyDataSetChanged();
                         }
-
+                        adapter.notifyDataSetChanged();
+                        swipe.setRefreshing(false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    pagerAdapter.notifyDataSetChanged();
-                    adapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
             }
@@ -207,23 +208,26 @@ public class HomeFragment extends Fragment {
         StringRequest request = new StringRequest(Address.Before_News + (page + 1), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    if (response != null) {
-                        BeforeNews news = new BeforeNews();
-                        news.parseJson(new JSONObject(response));
-                        data.add(news.getDate());
-                        data.addAll(news.getItems());
-                        date = news.getTime();
+                if (response != null) {
+                    try {
+                        if (response != null) {
+                            BeforeNews news = new BeforeNews();
+                            news.parseJson(new JSONObject(response));
+                            data.add(news.getDate());
+                            data.addAll(news.getItems());
+                            date = news.getTime();
+                        }
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    adapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(context, "哎呀，好像出错了", Toast.LENGTH_SHORT).show();
             }
         });
         MyApp.getQueue().add(request);

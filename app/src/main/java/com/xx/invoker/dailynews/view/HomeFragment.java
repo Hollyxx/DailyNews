@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -112,6 +113,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setListener() {
+
         list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -144,9 +146,7 @@ public class HomeFragment extends Fragment {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                data.clear();
                 initData();
-
             }
         });
 
@@ -159,10 +159,11 @@ public class HomeFragment extends Fragment {
         StringRequest request = new StringRequest(Address.Latest_News, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
                 if (response != null) {
                     try {
                         //获取今日热闻的数据
+                        data.clear();
+                        headList.clear();
                         LatestNews news = new LatestNews();
                         news.parseJson(new JSONObject(response));
                         data.add(news.getDate());
@@ -171,16 +172,14 @@ public class HomeFragment extends Fragment {
                         date = news.getTime();
 
                         //获得首页ViewPager的数据
-                        if (headList.size()==0){
-                            JSONArray array = new JSONObject(response).getJSONArray("top_stories");
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                HeadNews head = new HeadNews();
-                                head.parseJson(object);
-                                headList.add(head);
-                            }
-                            pagerAdapter.notifyDataSetChanged();
+                        JSONArray array = new JSONObject(response).getJSONArray("top_stories");
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            HeadNews head = new HeadNews();
+                            head.parseJson(object);
+                            headList.add(head);
                         }
+                        pagerAdapter.notifyDataSetChanged();
                         adapter.notifyDataSetChanged();
                         swipe.setRefreshing(false);
                     } catch (Exception e) {

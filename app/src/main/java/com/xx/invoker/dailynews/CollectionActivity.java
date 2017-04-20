@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,7 @@ public class CollectionActivity extends AppCompatActivity implements SlideCutLis
     private SharedPreferences preferences;
     private SQLiteDatabase db;
     private String username;
+    private SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class CollectionActivity extends AppCompatActivity implements SlideCutLis
     private void initView() {
         list = (SlideCutListView) findViewById(R.id.list_collection);
         empty = (TextView) findViewById(R.id.empty);
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_collection);
 
         list.setEmptyView(empty);
         list.setRemoveListener(this);
@@ -64,6 +67,13 @@ public class CollectionActivity extends AppCompatActivity implements SlideCutLis
                 intent.putExtra("title", news.getTitle());
                 intent.putExtra("image", news.getImage());
                 startActivity(intent);
+            }
+        });
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                query(username);
             }
         });
     }
@@ -89,6 +99,7 @@ public class CollectionActivity extends AppCompatActivity implements SlideCutLis
                 data.add(news);
             }
             adapter.notifyDataSetChanged();
+            swipe.setRefreshing(false);
         }
     }
 

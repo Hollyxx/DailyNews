@@ -115,6 +115,7 @@ public class ThemeFragment extends Fragment {
             public void onResponse(String response) {
                 if (response != null) {
                     try {
+                        data.clear();
                         JSONObject object = new JSONObject(response);
                         summary.setText(object.getString("description"));
                         Glide.with(context).load(object.getString("background")).into(image);

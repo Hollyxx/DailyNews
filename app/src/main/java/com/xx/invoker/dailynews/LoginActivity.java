@@ -72,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void bClick(View view) {
-        //TODO 跳转到注册页面
         Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
         finish();

@@ -1,4 +1,4 @@
-package com.xx.invoker.dailynews.address;
+package com.xx.invoker.dailynews.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -39,19 +39,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initDrawerView();
-        initHeadView();
-        StatusBarUtil.setWindowStatusBarColor(this, R.color.home_toolbar);
         preferences = MyApp.getPreferences();
+        initDrawerView();
+
+        StatusBarUtil.setWindowStatusBarColor(this, R.color.home_toolbar);
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_fragment_home, new HomeFragment()).commit();
-
     }
 
-    private void initHeadView() {
-        View inflate = LayoutInflater.from(this).inflate(R.layout.head_nav_home, null);
-        username = (TextView) inflate.findViewById(R.id.user_name);
-
+    private void initHeadView(NavigationView navigationView) {
+        View headerView = navigationView.getHeaderView(0);
+        username = (TextView) headerView.findViewById(R.id.user_name);
+        if (preferences.getBoolean("loginStatus", false)) {
+            username.setText(preferences.getString("username", "abc"));
+        }
     }
 
     @Override
@@ -77,16 +78,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_home);
         navigationView.setNavigationItemSelectedListener(this);
+        initHeadView(navigationView);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
 
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    //TODO: 抽屉的单条点击事件
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = 0;

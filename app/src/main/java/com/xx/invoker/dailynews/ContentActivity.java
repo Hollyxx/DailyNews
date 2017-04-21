@@ -33,7 +33,6 @@ import com.xx.invoker.dailynews.model.Content;
 import com.xx.invoker.dailynews.model.ExtraContent;
 import com.xx.invoker.dailynews.model.News;
 import com.xx.invoker.dailynews.utils.StatusBarUtil;
-import com.xx.invoker.dailynews.utils.SystemBarTintManager;
 
 import org.json.JSONObject;
 
@@ -53,7 +52,6 @@ public class ContentActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private SharedPreferences preferences;
     private LinearLayout linearLayout;
-//    private SystemBarTintManager manager;
 
 
     @Override
@@ -179,15 +177,14 @@ public class ContentActivity extends AppCompatActivity {
 
             case R.id.action_comment_toolbar_content:
                 //TODO 在这里进行评论的查看，跳转到评论页面
-
+                Intent intent = new Intent(this,CommentActivity.class);
+                intent.putExtra("id",this.id);
+                startActivity(intent);
                 break;
 
             case R.id.action_praise_toolbar_content:
-                //TODO 在这里进行点赞的操作，点击后弹出Toast
-
                 praiseImg.setImageResource(R.mipmap.comment_voted);
                 Toast.makeText(this, "点赞成功 +1", Toast.LENGTH_SHORT).show();
-
                 break;
 
             case R.id.back_content_activity:

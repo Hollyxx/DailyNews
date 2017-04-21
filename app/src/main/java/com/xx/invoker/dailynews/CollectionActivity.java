@@ -9,11 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xx.invoker.dailynews.address.CollectionListAdapter;
+import com.xx.invoker.dailynews.adapter.CollectionListAdapter;
 import com.xx.invoker.dailynews.app.MyApp;
 import com.xx.invoker.dailynews.db.MyHelper;
 import com.xx.invoker.dailynews.model.News;
@@ -21,7 +20,6 @@ import com.xx.invoker.dailynews.utils.StatusBarUtil;
 import com.xx.invoker.dailynews.view.SlideCutListView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CollectionActivity extends AppCompatActivity implements SlideCutListView.RemoveListener{

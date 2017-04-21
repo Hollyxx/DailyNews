@@ -25,4 +25,11 @@ public class Address {
 
     //新闻长评论查看  http://news-at.zhihu.com/api/4/story/8997528/long-comments
     public static final String Comments_News="http://news-at.zhihu.com/api/4/story/";
+
+    public static String getComments(int type, int id){
+        if (type == 1)
+            return Comments_News + id +"/short-comments";
+        else
+            return Comments_News + id +"/long-comments";
+    }
 }

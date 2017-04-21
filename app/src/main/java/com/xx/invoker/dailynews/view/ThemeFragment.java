@@ -83,8 +83,10 @@ public class ThemeFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                News news = data.get((int)id);
+                if (id < 0) {
+                    return;
+                }
+                News news = data.get((int) id);
                 Intent intent = new Intent(context, ContentActivity.class);
                 intent.putExtra("id", news.getId());
                 intent.putExtra("title", news.getTitle());

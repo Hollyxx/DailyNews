@@ -39,7 +39,7 @@ public class CollectionActivity extends AppCompatActivity implements SlideCutLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
         StatusBarUtil.setWindowStatusBarColor(this, R.color.home_toolbar);
-
+        Toast.makeText(this, "左滑或右滑删除收藏", Toast.LENGTH_SHORT).show();
         helper = new MyHelper(this, null);
         preferences = MyApp.getPreferences();
 

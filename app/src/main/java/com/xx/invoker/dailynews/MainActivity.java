@@ -42,11 +42,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         preferences = MyApp.getPreferences();
         initDrawerView();
 
+        //将状态栏改成标题栏的颜色
         StatusBarUtil.setWindowStatusBarColor(this, R.color.home_toolbar);
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_fragment_home, new HomeFragment()).commit();
     }
 
+    //初始化抽屉布局的头布局
     private void initHeadView(NavigationView navigationView) {
         View headerView = navigationView.getHeaderView(0);
         username = (TextView) headerView.findViewById(R.id.user_name);
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initHeadView(navigationView);
     }
 
-
+    //抽屉布局的菜单点击事件
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = 0;
@@ -172,12 +174,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = view.getId();
         switch (id) {
 
+            //返回首页的Fragment
             case R.id.home:
                 toolbar.setTitle("首页");
                 drawer.closeDrawer(Gravity.LEFT);
                 manager.beginTransaction().replace(R.id.frame_fragment_home, new HomeFragment()).commit();
                 break;
 
+            //进入我的收藏
             case R.id.collect_nav_home:
                 drawer.closeDrawer(Gravity.LEFT);
                 if (preferences.getBoolean("loginStatus", false)) {

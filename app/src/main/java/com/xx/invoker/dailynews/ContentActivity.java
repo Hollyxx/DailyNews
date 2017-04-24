@@ -1,19 +1,15 @@
 package com.xx.invoker.dailynews;
 
-import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -61,7 +57,6 @@ public class ContentActivity extends AppCompatActivity {
         initView();
         preferences = MyApp.getPreferences();
         //获取上个页面传来的信息
-
         intent = getIntent();
         id = intent.getIntExtra("id", 0);
         news.setId(id);
@@ -71,6 +66,7 @@ public class ContentActivity extends AppCompatActivity {
 
     }
 
+    //初始化控件
     private void initView() {
         bar = (Toolbar) findViewById(R.id.toolbar_content);
         comment = (TextView) bar.findViewById(R.id.action_comment_number);
@@ -84,11 +80,11 @@ public class ContentActivity extends AppCompatActivity {
         DBHelper = new MyHelper(this, null);
         db = DBHelper.getWritableDatabase();
         news = new News();
-        StatusBarUtil.setWindowStatusBarColor(this,R.color.home_toolbar);
+        StatusBarUtil.setWindowStatusBarColor(this, R.color.home_toolbar);
 
     }
 
-
+    //加载网络数据
     private void loadDate() {
         StringRequest request_content = new StringRequest(Address.Content_News + id, new Response.Listener<String>() {
             @Override
@@ -97,9 +93,9 @@ public class ContentActivity extends AppCompatActivity {
                     try {
                         Gson gson = new Gson();
                         content = gson.fromJson(response, Content.class);
-                        if (TextUtils.isEmpty(content.getImage())){
+                        if (TextUtils.isEmpty(content.getImage())) {
                             linearLayout.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             Glide.with(ContentActivity.this).load(content.getImage()).into(image);
                             title.setText(content.getTitle());
                         }
@@ -148,6 +144,7 @@ public class ContentActivity extends AppCompatActivity {
         MyApp.getQueue().add(request_extra);
     }
 
+    //设置WebView
     private void setWebViewDisplay() {
         String css = "<link rel=\"stylesheet\" href=\"file:///android_asset/css/news.css\" type=\"text/css\">";
         String html = "<html><head>" + css + "</head><body>" + content.getBody() + "</body></html>";
@@ -157,6 +154,7 @@ public class ContentActivity extends AppCompatActivity {
         web.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
     }
 
+    //menu的点击事件
     public void menuClick(View view) {
 
         int id = view.getId();
@@ -167,23 +165,22 @@ public class ContentActivity extends AppCompatActivity {
                     Intent intent = new Intent(ContentActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
-                    if(!isCollect()){
+                    if (!isCollect()) {
                         insert(db, news);
                         collectImg.setImageResource(R.mipmap.collected);
-                    }else
+                    } else
                         Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
             case R.id.action_comment_toolbar_content:
-                //TODO 在这里进行评论的查看，跳转到评论页面
-                Intent intent = new Intent(this,CommentActivity.class);
-                intent.putExtra("id",this.id);
+                Intent intent = new Intent(this, CommentActivity.class);
+                intent.putExtra("id", this.id);
                 startActivity(intent);
                 break;
 
             case R.id.action_praise_toolbar_content:
-                praiseImg.setImageResource(R.mipmap.comment_voted);
+                praiseImg.setImageResource(R.mipmap.praised);
                 Toast.makeText(this, "点赞成功 +1", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -191,7 +188,6 @@ public class ContentActivity extends AppCompatActivity {
                 finish();
                 break;
         }
-
     }
 
     //判断是否已经收藏过
@@ -200,17 +196,17 @@ public class ContentActivity extends AppCompatActivity {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.close();
             return true;
-        }else
+        } else
             return false;
     }
 
-
+    //向数据库中添加数据
     private void insert(SQLiteDatabase db, News news) {
         ContentValues values = new ContentValues();
         values.put("id", news.getId());
         values.put("title", news.getTitle());
         values.put("url", news.getImage());
-        values.put("username",preferences.getString("username","abc"));
+        values.put("username", preferences.getString("username", "abc"));
         long count = db.insert("collections", null, values);
         if (count > 0) {
             Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
